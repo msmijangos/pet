@@ -1,2 +1,8 @@
 @extends('layouts.app')
-<p>consultas index</p>
+@section('content')
+<div class="container">
+<p>index de consultas</p>
+
+</div>
+@endsection
+

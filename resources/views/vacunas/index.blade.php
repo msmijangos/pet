@@ -1,2 +1,8 @@
 @extends('layouts.app')
-<p>vacunas index</p>
+@section('content')
+<div class="container">
+<p>index de vacunas</p>
+
+</div>
+@endsection
+

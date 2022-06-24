@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\mascota;
 use Illuminate\Http\Request;
 
 class mascotaController extends Controller
@@ -14,7 +15,10 @@ class mascotaController extends Controller
     public function index()
     {
         //
-        return view('mascota.index');
+        $mascotas= mascota::all();
+        // dd($mascotas);
+
+        return view("mascota.index",compact('mascotas'));
     }
 
     /**
@@ -25,6 +29,7 @@ class mascotaController extends Controller
     public function create()
     {
         //
+        return view('mascota.formulario');
     }
 
     /**
@@ -36,6 +41,11 @@ class mascotaController extends Controller
     public function store(Request $request)
     {
         //
+        // dd()
+        $mascota= new mascota;
+        $mascota= mascota::create($request->all());
+
+        return redirect()->route('mascota.index');
     }
 
     /**

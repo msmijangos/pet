@@ -8,7 +8,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Pet') }}</title>
+    <title>Pet @yield('title')</title>
+
 
     {{-- <style>
         .bg-white {

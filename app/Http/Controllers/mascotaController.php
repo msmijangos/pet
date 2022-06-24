@@ -15,10 +15,10 @@ class mascotaController extends Controller
     public function index()
     {
         //
-        $mascotas= mascota::all();
+        $mascotas = mascota::all();
         // dd($mascotas);
 
-        return view("mascota.index",compact('mascotas'));
+        return view("mascota.index", compact('mascotas'));
     }
 
     /**
@@ -41,9 +41,10 @@ class mascotaController extends Controller
     public function store(Request $request)
     {
         //
-        //  dd($request);
-        $mascota= new mascota;
-        $mascota= mascota::create($request->all());
+
+
+        $mascota = new mascota;
+        $mascota = mascota::create($request->all());
 
         return redirect()->route('mascota.index');
     }
@@ -68,9 +69,10 @@ class mascotaController extends Controller
     public function edit($id)
     {
         //
-        $mascota= mascota::where('id','=',$id)->first();
 
-        return view("mascota.formulario",compact('mascota'));
+        $mascota = mascota::where('id', '=', $id)->first();
+
+        return view("mascota.formularioEdit", compact('mascota'));
     }
 
     /**
@@ -83,6 +85,19 @@ class mascotaController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        if ($request->eliminar == "eliminar") {
+
+            return  redirect()->route('mascota.destroy',$id);
+        } else {
+            $mascota = mascota::where('id', '=', $id)->first();
+            $mascota->nombre = $request->nombre;
+            $mascota->tipo = $request->tipo;
+            $mascota->edad = $request->edad;
+            $mascota->save();
+
+            return redirect()->route('mascota.index');
+        }
     }
 
     /**
@@ -94,5 +109,11 @@ class mascotaController extends Controller
     public function destroy($id)
     {
         //
+
+        $mascota=mascota::where('id','=',$id)->first();
+        $mascota->delete();
+
+        return redirect()->route('mascota.index');
+
     }
 }

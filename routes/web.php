@@ -24,9 +24,10 @@ Route::get('mascota', 'mascotaController@index')->name('mascota.index');
 Route::get('mascota/crear', 'mascotaController@create')->name('mascota.create');
 Route::post('mascota', 'mascotaController@store')->name('mascota.store');
 Route::get('mascota/editar/{id}', 'mascotaController@edit')->name('mascota.edit');
+Route::any('mascota/editar({id}', 'mascotaController@update')->name('mascota.update');
+Route::any('mascota/elimiar/{id}', 'mascotaController@destroy')->name('mascota.destroy');
+
+
 
 Route::get('vacunas', 'vacunasController@index')->name('vacunas.index');
 Route::get('consultas', 'consultasController@index')->name('consultas.index');
-
-
-

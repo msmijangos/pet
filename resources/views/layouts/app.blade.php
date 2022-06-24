@@ -8,6 +8,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+
+
     <title>Pet @yield('title')</title>
 
 
@@ -25,6 +27,9 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script type="text/javascript" src="{{ asset('js/jquery.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}" defer></script> --}}
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -32,6 +37,9 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
+
+
 </head>
 
 <body>

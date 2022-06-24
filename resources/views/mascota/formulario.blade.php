@@ -4,8 +4,11 @@
 
 
 @section('content')
+{{-- @php
+    dd($mascota);
+@endphp --}}
     <div class="container">
-        <form action="/mascota/crear" method="POST">
+        <form action="{{route('mascota.store')}}" method="POST">
             @csrf
             <div class="col-sm-12">
                 <label for="nombre" class="form-label">Nombre</label>
@@ -38,3 +41,6 @@
         </form>
     </div>
 @endsection
+
+
+

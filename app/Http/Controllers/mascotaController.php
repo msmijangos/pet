@@ -41,7 +41,7 @@ class mascotaController extends Controller
     public function store(Request $request)
     {
         //
-        // dd()
+        //  dd($request);
         $mascota= new mascota;
         $mascota= mascota::create($request->all());
 
@@ -68,6 +68,9 @@ class mascotaController extends Controller
     public function edit($id)
     {
         //
+        $mascota= mascota::where('id','=',$id)->first();
+
+        return view("mascota.formulario",compact('mascota'));
     }
 
     /**

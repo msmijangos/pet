@@ -9,6 +9,6 @@ class mascota extends Model
     //
     protected $table = "mascota";
     protected $fillable = [
-        'nombre', 'tipo', 'edad',
+        'iddueño','nombre', 'tipo', 'edad',
     ];
 }

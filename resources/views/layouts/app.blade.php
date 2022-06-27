@@ -51,8 +51,8 @@
                 </a>
                 @auth
                     <a class="nav-link" href="{{ route('mascota.index') }}">{{ __('Mascota') }}</a>
-                    <a class="nav-link" href="{{ route('vacunas.index') }}">{{ __('Vacunas') }}</a>
-                    <a class="nav-link" href="{{ route('consultas.index') }}">{{ __('Consultas') }}</a>
+                    <a class="nav-link" href="{{ route('vacuna.index') }}">{{ __('Vacunas') }}</a>
+                    <a class="nav-link" href="{{ route('consulta.index') }}">{{ __('Consultas') }}</a>
                 @endauth
 
 

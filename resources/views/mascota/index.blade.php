@@ -1,9 +1,14 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        <p>index de mascota</p>
 
-        <a class="nav-link" href="{{ route('mascota.create') }}">{{ __('Dar de alta mascota') }}</a>
+
+        {{-- <a class="nav-link" href="{{ route('mascota.create') }}">{{ __('Dar de alta mascota') }}</a> --}}
+        <div class="row">
+            <a class="nav-link" href="{{ route('mascota.create') }}">
+                <button type="button" class="btn btn-primary btn-sm">Dar de alta mascota</button>
+            </a>
+        </div>
 
         @if ($mascotas)
             <table id="example" class="display" style="width:100%">
@@ -22,7 +27,8 @@
                             <td>{{ $mascota->nombre }}</td>
                             <td>{{ $mascota->tipo }}</td>
                             <td>{{ $mascota->edad }}</td>
-                            <td> <a class="dropdown-item text-info" href="{{ route('mascota.edit',$mascota->id) }}"><i class="far fa-file"></i> Editar</a></td>
+                            <td> <a class="dropdown-item text-info" href="{{ route('mascota.edit', $mascota->id) }}"><i
+                                        class="far fa-file"></i> Editar</a></td>
                         </tr>
                     @endforeach
 
@@ -36,7 +42,7 @@
         @endif
     </div>
 
-    <script type="text/javascript" src="{{ asset('js/jquery.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}" defer></script>
 
     <script>
@@ -54,7 +60,3 @@
         });
     </script>
 @endsection
-
-
-
-

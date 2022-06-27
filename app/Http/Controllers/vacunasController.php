@@ -2,10 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\mascota;
+use App\vacuna;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class vacunasController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +23,10 @@ class vacunasController extends Controller
     public function index()
     {
         //
-        return view('vacunas.index');
+        
+        $vacunas = vacuna::where('iddueño', '=', Auth::user()->id)->get();
+
+        return view('vacunas.index', compact('vacunas'));
     }
 
     /**
@@ -25,6 +37,9 @@ class vacunasController extends Controller
     public function create()
     {
         //
+        $mascotas = mascota::where('iddueño', '=', Auth::user()->id)->get();
+
+        return view('vacunas.formulario', compact('mascotas'));
     }
 
     /**
@@ -36,6 +51,19 @@ class vacunasController extends Controller
     public function store(Request $request)
     {
         //
+        // dd($request);
+        $vacuna = new vacuna();
+        $vacuna->iddueño = Auth::user()->id;
+        $vacuna->fecharegistro = Carbon::now();
+        $vacuna->estatus = 'Por aplicar';
+        $vacuna->nombre = $request->nombre;
+        $vacuna->nombreaplicador = "";
+        $vacuna->nombremascota = $request->nombremascota;
+        $vacuna->fecha = $request->fecha;
+
+        $vacuna->save();
+
+        return redirect()->route('vacuna.index');
     }
 
     /**
@@ -58,6 +86,9 @@ class vacunasController extends Controller
     public function edit($id)
     {
         //
+        $vacuna = vacuna::where('id', '=', $id)->first();
+
+        return view("vacunas.formularioEdit", compact('vacuna'));
     }
 
     /**
@@ -70,6 +101,23 @@ class vacunasController extends Controller
     public function update(Request $request, $id)
     {
         //
+        if ($request->eliminar == "eliminar") {
+
+            return  redirect()->route('vacuna.destroy', $id);
+        } else {
+            $vacuna = vacuna::where('id', '=', $id)->first();
+            $vacuna->nombre = $request->nombre;
+            $vacuna->nombreaplicador = $request->nombreaplicador;
+            $vacuna->nombremascota = $request->nombremascota;
+            $vacuna->fecha = $request->fecha;
+            $vacuna->fecharegistro = $request->fecharegistro;
+
+
+            $vacuna->save();
+
+
+            return redirect()->route('vacuna.index');
+        }
     }
 
     /**
@@ -81,5 +129,13 @@ class vacunasController extends Controller
     public function destroy($id)
     {
         //
+        $vacuna = vacuna::where('id', '=', $id)->first();
+        if ($vacuna->nombreaplicador == '') {
+            return redirect()->route('vacuna.index');
+        } else {
+            $vacuna->estatus = 'Aplicada';
+            $vacuna->save();
+            return redirect()->route('vacuna.index');
+        }
     }
 }

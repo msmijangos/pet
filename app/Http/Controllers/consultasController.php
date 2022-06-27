@@ -2,10 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\consulta;
+use App\mascota;
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class consultasController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +24,8 @@ class consultasController extends Controller
     public function index()
     {
         //
-        return view('consultas.index');
+        $consultas = consulta::where('iddueño', '=', Auth::user()->id)->get();
+        return view('consultas.index', compact('consultas'));
     }
 
     /**
@@ -25,6 +36,8 @@ class consultasController extends Controller
     public function create()
     {
         //
+        $mascotas = mascota::where('iddueño', '=', Auth::user()->id)->get();
+        return view('consultas.formulario', compact('mascotas'));
     }
 
     /**
@@ -36,6 +49,22 @@ class consultasController extends Controller
     public function store(Request $request)
     {
         //
+        // dd($request);
+        $consulta = new consulta();
+        $consulta->iddueño = Auth::user()->id;
+
+        $consulta->nombredueño = $request->nombredueño;
+        $consulta->nombremascota = $request->nombremascota;
+        $consulta->tipo = $request->tipo;
+        $consulta->peso = $request->peso;
+        $consulta->edad = $request->edad;
+        $consulta->sintomas = $request->sintomas;
+        $consulta->receta = $request->receta;
+        $consulta->fechaconsulta = Carbon::now();
+        $consulta->fechaproxima = $request->fecha;
+        $consulta->save();
+
+        return redirect()->route('consulta.index');
     }
 
     /**
@@ -58,6 +87,8 @@ class consultasController extends Controller
     public function edit($id)
     {
         //
+        $consulta = consulta::where('id', '=', $id)->first();
+        return view('consultas.formularioEdit', compact('consulta'));
     }
 
     /**
@@ -70,6 +101,24 @@ class consultasController extends Controller
     public function update(Request $request, $id)
     {
         //
+        if ($request->eliminar == "eliminar") {
+
+            return  redirect()->route('consulta.destroy', $id);
+        } else {
+            $consulta = consulta::where('id', '=', $id)->first();
+            $consulta->iddueño = Auth::user()->id;
+            $consulta->nombredueño = $request->nombredueño;
+            $consulta->nombremascota = $request->nombremascota;
+            $consulta->tipo = $request->tipo;
+            $consulta->peso = $request->peso;
+            $consulta->edad = $request->edad;
+            $consulta->sintomas = $request->sintomas;
+            $consulta->receta = $request->receta;
+            $consulta->fechaconsulta = Carbon::now();
+            $consulta->fechaproxima = $request->fecha;
+            $consulta->save();
+            return redirect()->route('consulta.index');
+        }
     }
 
     /**
@@ -81,5 +130,9 @@ class consultasController extends Controller
     public function destroy($id)
     {
         //
+        $consulta = consulta::where('id', '=', $id)->first();
+        $consulta->delete();
+       
+        return redirect()->route('consulta.index');
     }
 }

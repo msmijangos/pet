@@ -3,10 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\mascota;
+use App\consulta;
+use App\vacuna;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class mascotaController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,8 +24,8 @@ class mascotaController extends Controller
     public function index()
     {
         //
-        $mascotas = mascota::all();
-        // dd($mascotas);
+
+        $mascotas = mascota::where('iddueño', '=', Auth::user()->id)->get();
 
         return view("mascota.index", compact('mascotas'));
     }
@@ -44,6 +53,7 @@ class mascotaController extends Controller
 
 
         $mascota = new mascota;
+        $request->merge(['iddueño' => Auth::user()->id]);
         $mascota = mascota::create($request->all());
 
         return redirect()->route('mascota.index');
@@ -88,7 +98,7 @@ class mascotaController extends Controller
 
         if ($request->eliminar == "eliminar") {
 
-            return  redirect()->route('mascota.destroy',$id);
+            return  redirect()->route('mascota.destroy', $id);
         } else {
             $mascota = mascota::where('id', '=', $id)->first();
             $mascota->nombre = $request->nombre;
@@ -110,10 +120,13 @@ class mascotaController extends Controller
     {
         //
 
-        $mascota=mascota::where('id','=',$id)->first();
+        $mascota = mascota::where('id', '=', $id)->first();
         $mascota->delete();
+        // $vacunas = vacuna::where('nombre','=',$mascota->nombre)->get();
+        // $vacunas->delete();
+        vacuna::where('nombremascota', $mascota->nombre)->delete();
+        consulta::where('nombremascota', $mascota->nombre)->delete();
 
         return redirect()->route('mascota.index');
-
     }
 }

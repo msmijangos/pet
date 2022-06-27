@@ -4,9 +4,7 @@
 
 
 @section('content')
-    {{-- @php
-    dd($mascota);
-@endphp --}}
+    
     <div class="container">
         <form action="{{ route('mascota.store') }}" method="POST">
             @csrf

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Mascota extends Migration
+class Vacuna extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,16 @@ class Mascota extends Migration
      */
     public function up()
     {
-        Schema::create('mascota', function (Blueprint $table) {
+        //
+        Schema::create('vacuna', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('iddueño');
             $table->string('nombre');
-            $table->string('tipo');
-            $table->integer('edad');
+            $table->string('nombremascota');
+            $table->string('nombreaplicador');
+            $table->string('estatus');
+            $table->date('fecha');
+            $table->date('fecharegistro');
             $table->timestamps();
         });
     }
@@ -30,6 +34,7 @@ class Mascota extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mascota');
+        //
+        Schema::dropIfExists('vacuna');
     }
 }

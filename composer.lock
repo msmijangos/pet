@@ -248,7 +248,7 @@
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1 || ^8.0"
+                "php": "^7.1"
             },
             "require-dev": {
                 "doctrine/coding-standard": "^9.0",
@@ -324,7 +324,7 @@
                 "shasum": ""
             },
             "require": {
-                "php": "^7.0|^8.0"
+                "php": "^7.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^6.4|^7.0|^8.0|^9.0"
